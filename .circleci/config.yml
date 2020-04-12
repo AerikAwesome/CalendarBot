@@ -1,0 +1,18 @@
+ version: 2.1
+
+ orbs:
+  win: circleci/windows@2.2.0
+
+ jobs:
+   build:
+     executor: win/default     
+    
+     steps:
+       - checkout
+       - run:
+         name: "Add nuget package sources"
+         command: nuget sources add -name "disqord" -source "https://www.myget.org/F/quahu/api/v3/index.json"
+       - run:
+         name: "Install project dependencies"
+         command: dotnet restore
+       - run: dotnet build
