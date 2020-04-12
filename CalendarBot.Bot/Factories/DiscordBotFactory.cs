@@ -16,7 +16,7 @@ namespace CalendarBot.Bot.Factories
                 .AddPrefix('*')
                 .AddMentionPrefix();
 
-            var bot = new DiscordBot(TokenType.Bot, token, prefixProvider);
+            var bot = new DiscordBot(TokenType.Bot, token, prefixProvider, DiscordBotConfiguration.Default);
 
             bot.AddModule<PingModule>();
 

@@ -1,25 +1,62 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CalendarBot.Bot.Factories;
+using CalendarBot.Bot.Modules;
+using CalendarBot.Bot.Services;
+using CalendarBot.Data;
 using Disqord;
 using Disqord.Bot;
 using Disqord.Bot.Prefixes;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CalendarBot.Bot
 {
     public class Program
     {
-        public static IConfigurationRoot Configuration { get; set; }
         static async Task Main(string[] args)
         {
-            Configuration = BuildConfiguration();
+            var services = ConfigureServices();
 
-            await using var bot = new DiscordBotFactory().CreateBot(Configuration["Discord:BotToken"]);
-            await bot.RunAsync();
+            var serviceProvider = services.BuildServiceProvider();
+
+            var application = serviceProvider.GetService<IBotApplication>();
+
+            await application.Run();
+
         }
 
-        private static IConfigurationRoot BuildConfiguration()
+        private static IServiceCollection ConfigureServices()
+        {
+            var services = new ServiceCollection();
+
+            var config = BuildConfiguration();
+
+            services.AddSingleton(config);
+            services.ConfigureDatabaseConnection(config);
+
+            //Add services
+            services.AddSingleton<IUserService, UserService>();
+
+            services.AddSingleton(provider =>
+            {
+                var prefixProvider = new DefaultPrefixProvider()
+                    .AddPrefix('*')
+                    .AddMentionPrefix();
+
+                var bot = new DiscordBot(TokenType.Bot, config["Discord:BotToken"], prefixProvider,
+                    new DiscordBotConfiguration {ProviderFactory = _ => provider});
+
+                bot.AddModule<PingModule>();
+
+                return bot;
+            });
+            services.AddTransient<IBotApplication, BotApplication>();
+
+            return services;
+        }
+
+        private static IConfiguration BuildConfiguration()
         {
             var devEnvironmentVariable = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
 

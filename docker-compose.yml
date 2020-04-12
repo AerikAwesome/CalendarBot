@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  calendarbot.bot:
+    image: ${DOCKER_REGISTRY-}calendarbotbot
+    build:
+      context: .
+      dockerfile: CalendarBot.Bot/Dockerfile
+
+  calendarbot.web:
+    image: ${DOCKER_REGISTRY-}calendarbotweb
+    build:
+      context: .
+      dockerfile: CalendarBot.Web/Dockerfile
+
+  calendarbot.db:
+    image: postgres
+    restart: always
+    volumes:
+      - /var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: placeholder
+      POSTGRES_DB: calendarbot_db
