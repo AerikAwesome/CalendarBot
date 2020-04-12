@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
           name: Add nuget package sources
-          command: nuget sources add -name "disqord" -source "https://www.myget.org/F/quahu/api/v3/index.json"
+          command: dotnet nuget sources add -name "disqord" -source "https://www.myget.org/F/quahu/api/v3/index.json"
       - run:
           name: "Install project dependencies"
           command: dotnet restore
