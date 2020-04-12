@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CalendarBot.Bot": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
