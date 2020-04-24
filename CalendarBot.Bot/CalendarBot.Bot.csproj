@@ -16,9 +16,11 @@
 
   <ItemGroup>
     <PackageReference Include="Disqord.Bot" Version="1.0.0-nightly-00051" />
-    <PackageReference Include="Google.Apis.Calendar.v3" Version="1.45.0.1921" />
+    <PackageReference Include="Hangfire.Core" Version="1.7.11" />
+    <PackageReference Include="Hangfire.MemoryStorage" Version="1.7.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
+    <PackageReference Include="Scrutor" Version="3.2.1" />
   </ItemGroup>
 
   <ItemGroup>

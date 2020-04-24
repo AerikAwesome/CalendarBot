@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["CalendarBot/CalendarBot.csproj", "CalendarBot/"]
-RUN dotnet restore "CalendarBot/CalendarBot.csproj"
+COPY ["CalendarBot.Web/CalendarBot.Web.csproj", "CalendarBot.Web/"]
+RUN dotnet restore "CalendarBot.Web/CalendarBot.Web.csproj"
 COPY . .
-WORKDIR "/src/CalendarBot"
-RUN dotnet build "CalendarBot.csproj" -c Release -o /app/build
+WORKDIR "/src/CalendarBot.Web"
+RUN dotnet build "CalendarBot.Web.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "CalendarBot.csproj" -c Release -o /app/publish
+RUN dotnet publish "CalendarBot.Web.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "CalendarBot.dll"]
+ENTRYPOINT ["dotnet", "CalendarBot.Web.dll"]

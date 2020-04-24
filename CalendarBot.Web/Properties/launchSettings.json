@@ -2,20 +2,24 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/CalendarBot.Web",
+      "sslPort": 0
+    },
     "iisExpress": {
-      "applicationUrl": "http://localhost:52188",
-      "sslPort": 44359
+      "applicationUrl": "http://localhost:63206",
+      "sslPort": 44315
     }
   },
   "profiles": {
     "IIS Express": {
-      "commandName": "IISExpress",
+      "commandName": "IIS",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "CalendarBot": {
+    "CalendarBot.Web": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

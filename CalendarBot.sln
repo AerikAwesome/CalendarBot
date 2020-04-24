@@ -3,13 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalendarBot.Web", "CalendarBot.Web\CalendarBot.Web.csproj", "{43541ED5-D846-4B01-9DA5-08776BE3979A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalendarBot.Data", "CalendarBot.Data\CalendarBot.Data.csproj", "{CBBC6D85-6FAA-4492-98C0-CF17765BBFC4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarBot.Bot", "CalendarBot.Bot\CalendarBot.Bot.csproj", "{8392D45D-5FDA-4F1B-9C71-348B5AC165F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalendarBot.Bot", "CalendarBot.Bot\CalendarBot.Bot.csproj", "{8392D45D-5FDA-4F1B-9C71-348B5AC165F9}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4550A9CF-007B-4119-8E94-D74CFA8CB2EB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalendarBot.Web", "CalendarBot.Web\CalendarBot.Web.csproj", "{A7950EDD-C416-4359-B5B6-38C9F85AC0B2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalendarBot.Web.Old", "CalendarBot.Web.Old\CalendarBot.Web.Old.csproj", "{39B27DBA-B630-4F57-8616-719AB646D0F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalendarBot.Bot.Tests", "Unit tests\CalendarBot.Bot.Tests\CalendarBot.Bot.Tests.csproj", "{CEE70B1C-BF0D-4FF6-B964-506E2DE48BEF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit tests", "Unit tests", "{29B87216-87DF-41BE-9205-6BFD7B4BE45E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{43541ED5-D846-4B01-9DA5-08776BE3979A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{43541ED5-D846-4B01-9DA5-08776BE3979A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{43541ED5-D846-4B01-9DA5-08776BE3979A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{43541ED5-D846-4B01-9DA5-08776BE3979A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CBBC6D85-6FAA-4492-98C0-CF17765BBFC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CBBC6D85-6FAA-4492-98C0-CF17765BBFC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBBC6D85-6FAA-4492-98C0-CF17765BBFC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,9 +35,24 @@ Global
 		{4550A9CF-007B-4119-8E94-D74CFA8CB2EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4550A9CF-007B-4119-8E94-D74CFA8CB2EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4550A9CF-007B-4119-8E94-D74CFA8CB2EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7950EDD-C416-4359-B5B6-38C9F85AC0B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7950EDD-C416-4359-B5B6-38C9F85AC0B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7950EDD-C416-4359-B5B6-38C9F85AC0B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7950EDD-C416-4359-B5B6-38C9F85AC0B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39B27DBA-B630-4F57-8616-719AB646D0F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39B27DBA-B630-4F57-8616-719AB646D0F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39B27DBA-B630-4F57-8616-719AB646D0F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39B27DBA-B630-4F57-8616-719AB646D0F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEE70B1C-BF0D-4FF6-B964-506E2DE48BEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEE70B1C-BF0D-4FF6-B964-506E2DE48BEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEE70B1C-BF0D-4FF6-B964-506E2DE48BEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEE70B1C-BF0D-4FF6-B964-506E2DE48BEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CEE70B1C-BF0D-4FF6-B964-506E2DE48BEF} = {29B87216-87DF-41BE-9205-6BFD7B4BE45E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8F15B85A-BD71-480E-BFFA-D930C2DD2644}

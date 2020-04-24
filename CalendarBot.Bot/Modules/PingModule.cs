@@ -10,7 +10,7 @@ namespace CalendarBot.Bot.Modules
 {
     public class PingModule : DiscordModuleBase
     {
-        private IUserService _userService;
+        private readonly IUserService _userService;
         public PingModule(IUserService userService)
         {
             _userService = userService;
@@ -22,9 +22,16 @@ namespace CalendarBot.Bot.Modules
         [Command("user")]
         public async Task UserAsync()
         {
-            var user = await _userService.GetUserFromDiscordId("x");
+            try
+            {
+                var user = await _userService.GetUserFromDiscordId(Context.User.Id.ToString());
 
-            await ReplyAsync(user.ToString());
+                await ReplyAsync(user.ToString());
+            }
+            catch (Exception ex)
+            {
+                await ReplyAsync($"Message: {ex.Message}\nStackTrace: {ex.StackTrace}");
+            }
         }
     }
 }

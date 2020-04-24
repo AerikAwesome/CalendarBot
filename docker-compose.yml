@@ -16,8 +16,6 @@ services:
   calendarbot.db:
     image: postgres
     restart: always
-    volumes:
-      - /var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: placeholder
       POSTGRES_DB: calendarbot_db

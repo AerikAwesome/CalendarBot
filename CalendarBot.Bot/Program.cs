@@ -1,12 +1,19 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using CalendarBot.Bot.Factories;
+using CalendarBot.Bot.Applications;
+using CalendarBot.Bot.Decorators;
 using CalendarBot.Bot.Modules;
 using CalendarBot.Bot.Services;
+using CalendarBot.Bot.Utilities;
 using CalendarBot.Data;
+using CalendarBot.Data.Repositories;
 using Disqord;
 using Disqord.Bot;
 using Disqord.Bot.Prefixes;
+using Hangfire;
+using Hangfire.MemoryStorage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,10 +27,13 @@ namespace CalendarBot.Bot
 
             var serviceProvider = services.BuildServiceProvider();
 
-            var application = serviceProvider.GetService<IBotApplication>();
+            var cancellationToken = new CancellationToken();
+            
+            var applications = serviceProvider.GetServices<IApplication>();
 
-            await application.Run();
+            var tasks = applications.Select(a => a.Run(cancellationToken));
 
+            await Task.WhenAll(tasks);
         }
 
         private static IServiceCollection ConfigureServices()
@@ -35,8 +45,15 @@ namespace CalendarBot.Bot
             services.AddSingleton(config);
             services.ConfigureDatabaseConnection(config);
 
+            //configure Hangfire
+            GlobalConfiguration.Configuration
+                .UseMemoryStorage();
+
             //Add services
             services.AddSingleton<IUserService, UserService>();
+
+            services.AddScoped<IReminderRepository, MockReminderRepository>();
+            services.Decorate<IReminderRepository, HangfireReminderDecorator>();
 
             services.AddSingleton(provider =>
             {
@@ -48,11 +65,18 @@ namespace CalendarBot.Bot
                     new DiscordBotConfiguration {ProviderFactory = _ => provider});
 
                 bot.AddModule<PingModule>();
+                bot.AddModule<ReminderModule>();
 
                 return bot;
             });
-            services.AddTransient<IBotApplication, BotApplication>();
 
+            services.Scan(scan => scan
+                .FromAssemblyOf<Program>()
+                .AddClasses(classes => classes
+                    .AssignableTo<IApplication>())
+                .AsImplementedInterfaces()
+                .WithTransientLifetime());
+            
             return services;
         }
 
